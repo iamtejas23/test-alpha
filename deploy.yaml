@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = "us-east-1"
-        ECR_REPO = "test-alpha"
-        ACCOUNT_ID = "069176179632"
-        IMAGE_TAG = "latest"
-        CLUSTER_NAME = "extravagant-funk-dinosaur"
+        AWS_REGION = ''
+        ECR_REPO = ''
+        ACCOUNT_ID = ''
+        IMAGE_TAG = ''
+        CLUSTER_NAME = ''
     }
 
     stages {
@@ -20,9 +20,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh """
-                    docker build -t $ECR_REPO:$IMAGE_TAG .
-                    """
+                    sh '''
+                    set -a
+                    . .env
+                    set +a
+                    docker build -t "$ECR_REPO:$IMAGE_TAG" .
+                    '''
                 }
             }
         }
@@ -30,9 +33,12 @@ pipeline {
         stage('Login to ECR') {
             steps {
                 script {
-                    sh """
-                    aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
-                    """
+                    sh '''
+                    set -a
+                    . .env
+                    set +a
+                    aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+                    '''
                 }
             }
         }
@@ -40,13 +46,16 @@ pipeline {
         stage('Tag & Push Image') {
             steps {
                 script {
-                    sh """
-                    docker tag $ECR_REPO:$IMAGE_TAG \
-                    ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/$ECR_REPO:$IMAGE_TAG
+                    sh '''
+                    set -a
+                    . .env
+                    set +a
+                    docker tag "$ECR_REPO:$IMAGE_TAG" \
+                    "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/$ECR_REPO:$IMAGE_TAG"
 
                     docker push \
-                    ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/$ECR_REPO:$IMAGE_TAG
-                    """
+                    "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/$ECR_REPO:$IMAGE_TAG"
+                    '''
                 }
             }
         }
@@ -54,11 +63,14 @@ pipeline {
         stage('Update kubeconfig') {
             steps {
                 script {
-                    sh """
+                    sh '''
+                    set -a
+                    . .env
+                    set +a
                     aws eks update-kubeconfig \
-                    --region $AWS_REGION \
-                    --name $CLUSTER_NAME
-                    """
+                    --region "$AWS_REGION" \
+                    --name "$CLUSTER_NAME"
+                    '''
                 }
             }
         }
@@ -66,10 +78,13 @@ pipeline {
         stage('Deploy to EKS') {
             steps {
                 script {
-                    sh """
+                    sh '''
+                    set -a
+                    . .env
+                    set +a
                     kubectl apply -f k8s/deployment.yaml
                     kubectl apply -f k8s/service.yaml
-                    """
+                    '''
                 }
             }
         }
@@ -77,10 +92,13 @@ pipeline {
         stage('Rollout Update') {
             steps {
                 script {
-                    sh """
+                    sh '''
+                    set -a
+                    . .env
+                    set +a
                     kubectl rollout restart deployment/test-app
                     kubectl rollout status deployment/test-app
-                    """
+                    '''
                 }
             }
         }
