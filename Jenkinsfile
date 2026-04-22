@@ -5,9 +5,9 @@ pipeline {
         AWS_REGION   = 'us-east-1'
         ECR_REPO     = 'test-alpha'
         ACCOUNT_ID   = '069176179632'
-        IMAGE_TAG = "${BUILD_NUMBER}"
-        CLUSTER_NAME = 'wise-bat-xoil8c'          // fill
-        SERVICE_NAME = 'alpha-task-definition-service-h1krviys'          // fill
+        IMAGE_TAG    = "${BUILD_NUMBER}"
+        CLUSTER_NAME = 'wise-bat-xoil8c'
+        SERVICE_NAME = 'alpha-task-definition-service-h1krviys'
         TASK_FAMILY  = 'alpha-task-definition'
     }
 
@@ -58,6 +58,7 @@ pipeline {
 {
   "family": "$TASK_FAMILY",
   "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::$ACCOUNT_ID:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "name": "test-alpha",
