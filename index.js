@@ -92,7 +92,7 @@ app.get('/', (req, res) => {
       <body>
         <main class="page">
           <span class="badge">Test App v 1.0.8</span>
-          <h1 class="title">Hello World from test app!</h1>
+          <h1 class="title">Hello World from test lets learn!</h1>
           <p class="subtitle">
             This is a lightweight demo page served by Express inside a Dockerized Node app.
             It includes a cleaner UI, responsive layout, and a polished modern style.
