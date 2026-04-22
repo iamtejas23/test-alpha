@@ -14,8 +14,8 @@ app.get('/', (req, res) => {
           body {
             margin: 0;
             font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #0f172a 100%);
-            color: #f8fafc;
+            background: #000;
+            color: #fff;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -25,64 +25,67 @@ app.get('/', (req, res) => {
           .page {
             width: min(100%, 760px);
             padding: 2rem;
-            border-radius: 24px;
-            background: rgba(15, 23, 42, 0.95);
-            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.45);
-            border: 1px solid rgba(148, 163, 184, 0.12);
+            border-radius: 20px;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
           }
 
           .title {
             margin: 0 0 1rem;
             font-size: clamp(2rem, 4vw, 3rem);
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
+            color: #ffffff;
           }
 
           .subtitle {
             margin: 0 0 1.75rem;
             font-size: 1.05rem;
-            line-height: 1.8;
-            color: #cbd5e1;
+            line-height: 1.7;
+            color: #b3b3b3;
           }
 
           .panel {
             display: grid;
             gap: 1rem;
             padding: 1.5rem;
-            border-radius: 18px;
-            background: rgba(30, 41, 59, 0.9);
-            border: 1px solid rgba(148, 163, 184, 0.08);
+            border-radius: 16px;
+            background: #111;
+            border: 1px solid #222;
           }
 
           .badge {
             display: inline-flex;
-            padding: 0.45rem 0.9rem;
-            border-radius: 9999px;
-            background: #0ea5e9;
-            color: white;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            text-transform: uppercase;
+            padding: 0.4rem 0.85rem;
+            border-radius: 999px;
+            background: #111;
+            border: 1px solid #333;
+            color: #fff;
+            font-weight: 600;
             font-size: 0.75rem;
+            letter-spacing: 0.05em;
           }
 
           .button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.9rem 1.5rem;
-            border-radius: 9999px;
-            border: none;
-            background: linear-gradient(90deg, #38bdf8, #60a5fa);
-            color: #0f172a;
-            font-weight: 700;
+            padding: 0.85rem 1.4rem;
+            border-radius: 999px;
+            border: 1px solid #333;
+            background: #fff;
+            color: #000;
+            font-weight: 600;
             text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.2s ease;
             width: fit-content;
           }
 
           .button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 18px 40px rgba(56, 189, 248, 0.25);
+            background: #e5e5e5;
+          }
+
+          strong {
+            color: #fff;
           }
         </style>
       </head>
@@ -108,5 +111,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Test app listening at http://localhost:${port}`);
+  console.log(\`Test app listening at http://localhost:\${port}\`);
 });
