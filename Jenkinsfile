@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'docker-runner' }
+    agent any
 
     parameters {
         string(name: 'ECR_REPO',       defaultValue: 'test-alpha',                             description: 'ECR repository name')
