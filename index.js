@@ -91,7 +91,7 @@ app.get('/', (req, res) => {
       </head>
       <body>
         <main class="page">
-          <span class="badge">Test App v 1.0.10</span>
+          <span class="badge">Test App v 1.0.11</span>
           <h1 class="title">Hello World from test lets learn!</h1>
           <p class="subtitle">
             This is a lightweight demo page served by Express inside a Dockerized Node app.
